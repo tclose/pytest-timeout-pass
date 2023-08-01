@@ -8,10 +8,8 @@ the test, otherwise os._exit(1) is used.
 """
 import inspect
 import os
-import shutil
 import sys
 import threading
-import traceback
 from collections import namedtuple
 
 import pytest
@@ -314,75 +312,4 @@ def timeout_pass_timer(item, settings):
     This disables the capturemanager and dumps stdout and stderr.
     Then the stacks are dumped and os._exit(1) is called.
     """
-    if not settings.disable_debugger_detection and is_debugging():
-        return
-    try:
-        capman = item.config.pluginmanager.getplugin("capturemanager")
-        if capman:
-            capman.suspend_global_capture(item)
-            stdout, stderr = capman.read_global_capture()
-        else:
-            stdout, stderr = None, None
-        write_title("Timeout", sep="+")
-        caplog = item.config.pluginmanager.getplugin("_capturelog")
-        if caplog and hasattr(item, "capturelog_handler"):
-            log = item.capturelog_handler.stream.getvalue()
-            if log:
-                write_title("Captured log")
-                write(log)
-        if stdout:
-            write_title("Captured stdout")
-            write(stdout)
-        if stderr:
-            write_title("Captured stderr")
-            write(stderr)
-        dump_stacks()
-        write_title("Timeout", sep="+")
-    except Exception:
-        traceback.print_exc()
-    finally:
-        sys.stdout.flush()
-        sys.stderr.flush()
-        os._exit(1)
-
-
-def dump_stacks():
-    """Dump the stacks of all threads except the current thread."""
-    current_ident = threading.current_thread().ident
-    for thread_ident, frame in sys._current_frames().items():
-        if thread_ident == current_ident:
-            continue
-        for t in threading.enumerate():
-            if t.ident == thread_ident:
-                thread_name = t.name
-                break
-        else:
-            thread_name = "<unknown>"
-        write_title("Stack of %s (%s)" % (thread_name, thread_ident))
-        write("".join(traceback.format_stack(frame)))
-
-
-def write_title(title, stream=None, sep="~"):
-    """Write a section title.
-
-    If *stream* is None sys.stderr will be used, *sep* is used to
-    draw the line.
-    """
-    if stream is None:
-        stream = sys.stderr
-    width, height = shutil.get_terminal_size()
-    fill = int((width - len(title) - 2) / 2)
-    line = " ".join([sep * fill, title, sep * fill])
-    if len(line) < width:
-        line += sep * (width - len(line))
-    stream.write("\n" + line + "\n")
-
-
-def write(text, stream=None):
-    """Write text to stream.
-
-    Pretty stupid really, only here for symmetry with .write_title().
-    """
-    if stream is None:
-        stream = sys.stderr
-    stream.write(text)
+    raise NotImplementedError
