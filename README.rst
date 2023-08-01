@@ -17,21 +17,15 @@ pytest-timeout-pass
    :target: https://results.pre-commit.ci/latest/github/pytest-dev/pytest-timeout-pass/master
 
 
-This plugin will time each test and terminate it when it takes too
-long.  Termination may or may not be graceful, please see below, but
-when aborting it will show a stack dump of all thread running at the
-time.  This is useful when running tests under a continuous
-integration server or simply if you don't know why the test suite
-hangs.
-
-The pytest-timeout-pass plugin has been tested on Python 3.6 and higher,
-including PyPy3.  See tox.ini for currently tested versions.
+This plugin will time long-running tests, kill them when it has passed the initialisation phase
+and mark them as passed (i.e. assuming internal validation has completed successfully
+in the process to be tested). It is based on the `pytest-timeout <https://github.com/pytest-dev/pytest-timeout>`__ plugin .
 
 
 Usage
 =====
 
-Install is as simple as e.g.::
+Install with pip e.g.::
 
    pip install pytest-timeout-pass
 
@@ -82,9 +76,6 @@ The full signature of the timeout marker is:
 .. code:: python
 
    pytest.mark.timeout_pass(timeout=0)
-
-You can use either positional or keyword arguments for both the
-timeout and the method.  Neither needs to be present.
 
 See the marker api documentation_ and examples_ for the various ways
 markers can be applied to test items.
