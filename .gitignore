@@ -1,0 +1,83 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+bin/
+build/
+develop-eggs/
+dist/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg*
+pytest_timeout_pass/_version.py
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.cache
+.mypy_cache
+.pytest_cache
+nosetests.xml
+coverage.xml
+
+
+# Translations
+*.mo
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
+
+# Rope
+.ropeproject
+
+# Django stuff:
+*.log
+*.pot
+
+# Sphinx documentation
+docs/_build/
+
+# Virtual Envs
+.env*
+
+# IDE
+.idea
+.vscode
+.settings/
+/.history
+
+# Tempfiles
+*~
+*.swp
+~*
+
+# Mac OS
+.DS_Store
+
+# Docs build
+/docs/build
+/docs/source/_build
+
+# Venvs
+*.venv
+
+
